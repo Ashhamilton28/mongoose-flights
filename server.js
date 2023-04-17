@@ -2,6 +2,7 @@
 require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 //data
 const Flight = require('./models/Flight')
 const app = express();
@@ -22,27 +23,39 @@ app.use((req, res, next) => {
 
 //parses the data from the request
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
 
+//home page route
 app.get('/', (req, res) => {
     res.send('Hello flights')
 })
 
-
- 
-app.get('/flights', (req, res) => {
-    Flight.find({}, (error, allFlights)=>{
-        res.render('Index', {flights: allFlights})
-    })
-});
-
-
+//new route
 app.get('/flights/new', (req, res) => {
     res.render('New');
 });
 
+//create route
+app.get('/flights/create', (req, res) => {
+    res.send('received')
+})
+
 //index
-app.get('/flights', (req, res)=>{
-    res.render('Index', {flight: flights})
+app.get('/flights', (req, res) => {
+    Flight.find({}, (error, allFlights) => {
+        res.render('Index', { flights: allFlights })
+    })
+})
+
+//return the edits form 
+app.get('/flights/:id/edit', (req, res) => {
+    Flight.findById(req.params.id, (error, foundFlight) => {
+        if (!error) {
+            res.render('Edit', { flight: foundFlight })
+        } else {
+            res.send({ msg: error.message })
+        }
+    })
 })
 
 
@@ -50,6 +63,14 @@ app.get('/flights', (req, res)=>{
 
 
 
+
+
+
+
+
+
+
+//404 error
 app.get('*', (req, res) => {
     res.redirect('404')
 })
