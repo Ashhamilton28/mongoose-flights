@@ -20,9 +20,8 @@ app.use((req, res, next) => {
     console.log(req.url)
     next()
 })
-
-//parses the data from the request
 app.use(express.urlencoded({ extended: false }))
+app.use(express.json()) //turns sting into object
 app.use(methodOverride('_method'))
 
 //home page route
@@ -34,6 +33,16 @@ app.get('/', (req, res) => {
 app.get('/flights/new', (req, res) => {
     res.render('New');
 });
+
+//post
+app.post('/flights', (req, res)=>{
+    console.log(req.body)
+    
+    console.log(req.body.flightNo)
+    res.send('post request received')
+
+    
+})
 
 //create route
 app.get('/flights/create', (req, res) => {

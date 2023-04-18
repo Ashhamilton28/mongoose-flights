@@ -9,11 +9,15 @@ const flightSchema = new mongoose.Schema({
 
 flightNo: {
     type: Number,
+    required: true,
+    min:10,
+    max: 9999
 
 },
 
 departs: {
-    type: Date
+    type: Date,
+    default: Date.now()+365*24*60*60000
 }
 
 

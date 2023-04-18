@@ -9,12 +9,15 @@ function New() {
         <label>Airline:
             <input type="text" name="airline"/>
         </label><br/>
+
         <label>Flight Number:
             <input type="name" name="flightNo"/>
         </label><br/>
+
         <label>Depart Date:
-            <input type="name" name="flightNo"/>
+            <input type="name" name="departDate"/>
         </label><br/>
+        
         <button type="submit" value="addFlight">Add Flight</button>
       </form>
     </div>
